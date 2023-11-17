@@ -43,11 +43,27 @@ public class Rey {
         this.totalMovimientos = totalMovimientos;
     }
 
+    //Constructor por defecto
     private Rey (){
 
         setColor(Color.BLANCO);
         setPosicion(new Posicion(1,'e'));
     }
+
+    //Constructor parámetros
+
+    private Rey (Color color) {
+
+        if (color.equals(Color.BLANCO)) {
+
+            setPosicion(new Posicion(1,'e'));
+        } else {
+
+            setPosicion(new Posicion(8,'e'));
+        }
+    }
+
+
 
 
 }
