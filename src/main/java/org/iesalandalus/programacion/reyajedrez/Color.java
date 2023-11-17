@@ -10,5 +10,9 @@ public enum Color { BLANCO("Blanco"), NEGRO("Negro");
 
     }
 
+    @Override
+    public String toString() {
 
+        return cadenaAMostrar;
+    }
 }

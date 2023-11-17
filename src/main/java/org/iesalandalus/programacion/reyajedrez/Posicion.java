@@ -46,7 +46,7 @@ public class Posicion {
 
         if (columna <'a' || columna>'h') {
 
-            throw new IllegalArgumentException("ERROR: Columa no válida.");
+            throw new IllegalArgumentException("ERROR: Columna no válida.");
         }
         this.columna = columna;
     }
@@ -68,8 +68,8 @@ public class Posicion {
     @Override
     public String toString() {
         return "Posicion{" +
-                "fila=" + fila +
-                ", columna=" + columna +
+                "fila=valorFila" + fila +
+                ", columna=valorColumna" + columna +
                 '}';
     }
 }
