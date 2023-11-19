@@ -141,15 +141,6 @@ public class Rey {
 
             default: setPosicion(new Posicion (nuevaFila, nuevaColumna));
 
-
-
-
-
-
-
-
-
-
         }
     }
 
