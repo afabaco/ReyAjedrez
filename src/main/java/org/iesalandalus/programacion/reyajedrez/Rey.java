@@ -31,7 +31,7 @@ public class Rey {
 
         if (posicion == null) {
 
-            throw new NullPointerException();
+            throw new NullPointerException("ERROR: posición no válida.");
         } else {
             this.posicion = posicion;
         }
@@ -73,10 +73,7 @@ public class Rey {
         char nuevaColumna= posicion.getColumna();
         totalMovimientos=0;
 
-        if (direccion == null) {
 
-            throw new NullPointerException("ERROR: se sale del tablero.");
-        }
 
         switch (direccion) {
 
@@ -139,10 +136,20 @@ public class Rey {
                     nuevaColumna--;
                 }
 
-            default: setPosicion(new Posicion (nuevaFila, nuevaColumna));
+            default: throw new NullPointerException("ERROR: el movimiento no puede ser nula.");
 
         }
+
+        if ((nuevaFila >8 || nuevaFila<1) && (nuevaColumna<'a' || nuevaColumna>'h')) {
+
+            throw new OperationNotSupportedException("ERROR: se sale del tablero.");
+        } else {
+
+            setPosicion (new Posicion(nuevaFila, nuevaColumna));
+            totalMovimientos++;
+        }
     }
+
 
     @Override
     public String toString() {
