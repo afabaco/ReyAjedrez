@@ -52,7 +52,7 @@ public class Consola {
         return opcion;
     }
 
-    public static void mostrarOpciones
+    public static void mostrarOpciones()
 
     {
 
