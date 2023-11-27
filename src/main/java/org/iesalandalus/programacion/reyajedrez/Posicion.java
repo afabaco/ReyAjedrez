@@ -4,38 +4,24 @@ import java.util.Objects;
 
 public class Posicion {
 
-    //Variables
-
     private int fila;
     private char columna;
 
-    // Constructor parámetros
-    public Posicion (int fila, char columna){
 
+    public Posicion (int fila, char columna) {
         setFila(fila);
         setColumna(columna);
     }
 
-    //Constructor copia
-
     public Posicion (Posicion posicion){
-
         setFila(posicion.getFila());
         setColumna(posicion.getColumna());
 
     }
 
+
     public int getFila() {
         return fila;
-    }
-
-    public void setFila(int fila) {
-
-        if (fila <1 || fila>8) {
-
-            throw new IllegalArgumentException("ERROR: Fila no válida.");
-        }
-        this.fila = fila;
     }
 
     public char getColumna() {
@@ -43,12 +29,19 @@ public class Posicion {
     }
 
     public void setColumna(char columna) {
-
-        if (columna <'a' || columna>'h') {
-
-            throw new IllegalArgumentException("ERROR: Columna no válida.");
+        if (columna < 'a' || columna > 'h') {
+            throw new IllegalArgumentException();
         }
+
         this.columna = columna;
+    }
+
+    public void setFila(int fila) {
+        if (fila < 1 || fila > 8 ) {
+            throw new IllegalArgumentException("Error: Fila no válida.");
+        }
+
+        this.fila = fila;
     }
 
     @Override
@@ -64,12 +57,10 @@ public class Posicion {
         return Objects.hash(fila, columna);
     }
 
-
     @Override
     public String toString() {
-        return "Posicion{" +
-                "fila=valorFila" + fila +
-                ", columna=valorColumna" + columna +
-                '}';
+        return "El rey está en la posición: " +
+                "(fila " + fila +
+                ", columna " + columna + "). ";
     }
 }

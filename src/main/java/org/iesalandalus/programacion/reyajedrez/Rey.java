@@ -6,17 +6,38 @@ public class Rey {
 
     private Color color;
     private Posicion posicion;
-    private int totalMovimientos;
+    private int totalMovimientos = 0;
+
+    public Rey() {
+        setColor(Color.BLANCO);
+        setPosicion(new Posicion(1, 'e'));
+    }
+
+    public Rey(Color color) {
+
+        if (color==null) {
+            throw new NullPointerException("ERROR: color no válido.");
+        }
+
+        setColor(color);
+
+        if (color.equals(color.BLANCO)) {
+            setPosicion(new Posicion(1, 'e'));
+        } else {
+            setPosicion(new Posicion(8, 'e'));
+        }
+
+    }
+
 
     public Color getColor() {
+
         return color;
     }
 
     public void setColor(Color color) {
-
-        if (color != Color.BLANCO || color != Color.NEGRO) {
-
-            throw new IllegalArgumentException("ERROR: Color no válido.");
+        if (color == null) {
+            throw new NullPointerException("El color no es correcto");
         } else {
             this.color = color;
         }
@@ -28,13 +49,13 @@ public class Rey {
     }
 
     public void setPosicion(Posicion posicion) {
-
         if (posicion == null) {
 
-            throw new NullPointerException("ERROR: posición no válida.");
-        } else {
-            this.posicion = posicion;
+            throw new NullPointerException("La posicion no es valida");
         }
+
+
+        this.posicion = posicion;
     }
 
     public int getTotalMovimientos() {
@@ -45,117 +66,105 @@ public class Rey {
         this.totalMovimientos = totalMovimientos;
     }
 
-    //Constructor por defecto
-    private Rey (){
+    public void mover(Direccion direccion) throws OperationNotSupportedException {
 
-        setColor(Color.BLANCO);
-        setPosicion(new Posicion(1,'e'));
-    }
-
-    //Constructor parámetros
-
-    private Rey (Color color) {
-
-        if (color.equals(Color.BLANCO)) {
-
-            setPosicion(new Posicion(1,'e'));
-        } else {
-
-            setPosicion(new Posicion(8,'e'));
-        }
-    }
-
-    // Método mover
-
-    public void mover (Direccion direccion) throws OperationNotSupportedException {
-
-        int nuevaFila=posicion.getFila();
-        char nuevaColumna= posicion.getColumna();
-        totalMovimientos=0;
-
+        int nuevaFila = posicion.getFila();
+        char nuevaColumna = posicion.getColumna();
 
 
         switch (direccion) {
 
             case NORTE:
-
                 nuevaFila++;
                 break;
 
             case NORESTE:
-
                 nuevaFila++;
                 nuevaColumna++;
                 break;
-
             case ESTE:
                 nuevaColumna++;
                 break;
-
             case SURESTE:
                 nuevaFila--;
                 nuevaColumna++;
                 break;
-
-            case SUR:
-                nuevaFila--;
-
             case SUROESTE:
                 nuevaFila--;
                 nuevaColumna--;
                 break;
-
+            case SUR:
+                nuevaFila--;
+                break;
             case OESTE:
                 nuevaColumna--;
                 break;
-
             case NOROESTE:
                 nuevaFila++;
                 nuevaColumna--;
                 break;
-
             case ENROQUE_CORTO:
-                if (totalMovimientos>0) {
+                nuevaColumna++;
+                nuevaColumna++;
 
-                throw new NullPointerException("ERROR: movimiento no válido. ");
+                comprobarEnroque();
 
-                } else {
 
-                    nuevaColumna++;
-                    nuevaColumna++;
-
-                } break;
-
+                break;
             case ENROQUE_LARGO:
-                if (totalMovimientos>0) {
+                nuevaColumna--;
+                nuevaColumna--;
 
-                    throw new NullPointerException("ERROR: movimiento no válido.");
-                } else {
+                comprobarEnroque();
+                break;
 
-                    nuevaColumna--;
-                    nuevaColumna--;
-                }
 
-            default: throw new NullPointerException("ERROR: el movimiento no puede ser nula.");
+            default:
+                throw new NullPointerException("Error:El movimiento no puede ser nulo.");
 
         }
-
-        if ((nuevaFila >8 || nuevaFila<1) && (nuevaColumna<'a' || nuevaColumna>'h')) {
-
-            throw new OperationNotSupportedException("ERROR: se sale del tablero.");
+        if ((nuevaFila < 1 || nuevaFila > 8) && (nuevaColumna < 'A' || nuevaColumna > 'H')) {
+            throw new OperationNotSupportedException("ERROR: El Rey se sale del tablero.");
         } else {
-
-            setPosicion (new Posicion(nuevaFila, nuevaColumna));
+            setPosicion(new Posicion(nuevaFila, nuevaColumna));
             totalMovimientos++;
         }
+
+
+    }
+
+    private void comprobarEnroque() throws OperationNotSupportedException {
+
+
+
+        Rey reyBlanco=new Rey();
+
+
+
+        reyBlanco.setPosicion(new Posicion(1,'e'));
+
+        Rey reyNegro=new Rey();
+
+
+        reyNegro.setPosicion(new Posicion(8,'e'));
+
+        if (getColor().equals(Color.BLANCO) && (getPosicion().equals(reyBlanco.getPosicion()) && (getTotalMovimientos()==0))) {
+
+
+        } else if (getColor().equals(Color.NEGRO) && (getPosicion().equals(reyNegro.getPosicion()) && (getTotalMovimientos()==0))){
+
+        } else {
+            throw new OperationNotSupportedException("ERROR: movimiento no válido.");
+        }
+
     }
 
 
     @Override
     public String toString() {
-        return "Rey{" +
-                "color=" + color +
-                ", posicion=" + posicion +
-                '}';
+        return "El rey es de color: " + color +
+                ". " + posicion +
+                "El total de movimientos es:" + totalMovimientos + ".";
     }
+
 }
